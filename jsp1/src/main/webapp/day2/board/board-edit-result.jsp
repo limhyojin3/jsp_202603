@@ -26,7 +26,7 @@
 </body>
 </html>
 <script>
-	let result = <%= result %>
+	let result = <%= result %>;
 	if(result > 0){
 		alert("수정되었습니다!");
 	} else {

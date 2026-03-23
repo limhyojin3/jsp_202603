@@ -37,8 +37,9 @@
 	%>
 	<input name="boardNo" value="<%= boardNo %>" hidden>
 	
-		<!-- hidden 으로 한 이유 : 파라미터를 다음페이지로 넘기고싶지만 화면에 표시하긴 싫어서. -->
-	
+		<!-- name="boardNo" hidden 으로 한 이유 : 파라미터를 다음페이지로 넘기고싶지만 화면에 표시하긴 싫어서. -->
+		<!-- 파라미터를 다음페이지로 넘기려면 <input name="여기값" 이 필수. -->
+		<!-- input name값이 파라미터로 넘어감 -->
 	<table>
 	<%
 		

@@ -56,13 +56,13 @@
 	function fnAdd(){
 		let form = document.form;
 		
-		if(form.stuNo.value.length == 0 ||
+		/* if(form.stuNo.value.length == 0 ||
 				form.stuName.value.length == 0 ||
 				form.stuDept.value.length == 0 ||
 				form.stuGrade.value.length == 0) {
 			alert("공백을 두지마세요. 내용을 입력하세요.");
 			return;
-		}
+		} */
 		
 		form.submit();
 	}

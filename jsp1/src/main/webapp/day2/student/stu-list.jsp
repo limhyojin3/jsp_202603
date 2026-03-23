@@ -16,6 +16,7 @@
 		border-collapse: collapse;
 		text-align: center;
 	}
+	
 
 </style>
 </head>
