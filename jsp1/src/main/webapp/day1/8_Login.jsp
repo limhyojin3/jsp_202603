@@ -19,7 +19,7 @@
 	<!-- post는 데이터를 숨겨서 보낸다. -->
 	
 	<!-- 실습할때는 데이터 확인을 위해 get을 주로 쓸래요 -->
-	<form action="9_loginResult.jsp">
+	<form action="9_loginResult.jsp" method="get">
 		<div>
 			<label>아이디 : <input name="userId"></label>
 		</div>
