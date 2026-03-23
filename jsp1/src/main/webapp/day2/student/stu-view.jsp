@@ -24,7 +24,7 @@
 	<table>
 	<%
 	
-		String sql = 
+		String sql;
 	
 	%>
 	
