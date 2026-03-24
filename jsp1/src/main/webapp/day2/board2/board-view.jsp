@@ -27,6 +27,17 @@
 	.btn-area {
 		margin-top : 5px;
 	}
+	.line {
+		margin : 30px 0px;
+		border-bottom: 1px solid #aaa;
+	}
+	.comment-area th{
+		width:100px;
+	}
+	
+	.comment-area td{
+		width: 550px;
+	}
 </style>
 </head>
 <body>
@@ -56,7 +67,11 @@
 		stmt.executeUpdate(sql);
 		
 		
-		sql = "SELECT * FROM TBL_BOARD WHERE BOARDNO = " + boardNo;
+		sql = "SELECT * FROM TBL_BOARD WHERE BOARDNO = " + boardNo
+			+ " ORDER BY CDATETIME DESC";  //이 부분 안됨( )
+		
+		
+		
 		ResultSet rs = stmt.executeQuery(sql);
 		
 		String userId = "";
@@ -112,6 +127,56 @@
 	
 		<input type="button" value="되돌아가기">
 	</div>
+	
+	<div class="line">
+	
+	</div>
+	
+	<div class="comment-area">
+		
+		<table>
+		<%
+	
+			sql = "SELECT * FROM TBL_COMMENT WHERE BOARDNO = " + boardNo;
+			rs = stmt.executeQuery(sql);
+			
+			
+			while(rs.next()){
+		%>
+		
+			<tr>
+				<th><%= rs.getString("USERID") %></th>
+				<td><%= rs.getString("CONTENTS") %></td>
+				
+			</tr>
+		
+		<%
+				
+			}
+		%>	
+		</table>
+		
+		<table>
+		
+			<tr>
+				<th>댓글 등록</th>
+
+				<td style="width:470px; border-right: none"><textarea cols="65" rows="5" name="contents"></textarea></td><br>
+				<td style="width:50px; border-left: none">
+					<input type="button" value="등록" onclick="fnCommentAdd()">
+				</td>
+				
+			
+			
+			</tr>
+			
+		
+		
+		</table>
+		
+	</div>
+	
+	
 </form>
 </body>
 </html>
@@ -128,5 +193,12 @@
 		form.action = "board-remove.jsp";
 		form.submit(); */
 			
+	}
+	
+	function fnCommentAdd() {
+		let form = document.form;
+		form.action = "board-comment-add.jsp";
+		form.submit();
+		
 	}
 </script>
