@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
 	body {
 		margin : 30px;
 	}
@@ -16,12 +15,33 @@
 		border-collapse: collapse;
 		text-align: center;
 	}
-	
-
 </style>
 </head>
 <body>
+<form action="stu-list.jsp" name="form">
 	<%@ include file="../../db.jsp" %>
+	<% 
+	
+		String stuDept = request.getParameter("stuDept");//?stuDept='기계' , ?stuDept=''
+		stuDept = stuDept != null? stuDept : "";
+	
+	%>
+	
+	<div>
+	
+	
+		<select name="stuDept" onchange="fnDept(this.value)">
+		
+			<option value="">:: 전체 ::</option>
+			<option value="기계" <%= stuDept.equals("기계") ? "selected" : "" %>>기계</option>
+			<option value="전기전자" <%= stuDept.equals("전기전자") ? "selected" : "" %>">전기전자</option>
+			<option value="컴퓨터정보" <%= stuDept.equals("컴퓨터정보") ? "selected" : "" %>>컴퓨터정보</option>
+		
+		</select>
+	
+	</div>
+	
+	
 	
 	<table>
 		<tr>
@@ -29,36 +49,40 @@
 			<th>이름</th>
 			<th>학과</th>
 			<th>학년</th>
-			<!-- STU_NO, STU_NAME, STU_DEPT, STU_GRADE  -->
 		</tr>
-	<% 
-		String sql = "SELECT * FROM STUDENT";
-		
+	<%
+		String sql = "SELECT * FROM STUDENT WHERE 1=1 ";
+	
+		if(stuDept != null && !stuDept.equals("")){
+			sql += "AND STU_DEPT = '" + stuDept + "' ";
+		}
+	
+	
+	
 		ResultSet rs = stmt.executeQuery(sql);
 		while(rs.next()){
-			
-	%>	
-			<tr>
-				<td><%= rs.getString("STU_NO") %></td>
-				<td><a href="javascript:;" onclick="fnView(<%= rs.getString("STU_NO")%>)"> <%= rs.getString("STU_NAME") %></a></td>
-				<td><%= rs.getString("STU_DEPT") %></td>
-				<td><%= rs.getString("STU_GRADE") %></td>
-			</tr>
-	<%
+	%>
+		<tr>
+			<td><%= rs.getString("STU_NO") %></td>
+			<td><a href="stu-view.jsp?stuNo=<%= rs.getString("STU_NO") %>"><%= rs.getString("STU_NAME") %></a></td>
+			<td><%= rs.getString("STU_DEPT") %></td>
+			<td><%= rs.getString("STU_GRADE") %></td>
+		</tr>
+	<%		
 		}
 	%>
 	</table>
 	<div>
-		<input type="button" value="학생추가" onclick="fnAdd()">
+		<a href="stu-add.jsp"><input type="button" value="학생추가"></a>
 	</div>
+</form>
 </body>
 </html>
 <script>
-	function fnAdd(){
-		location.href = "stu-add.jsp";
-	}
-	function fnView(stuNo){
-		location.href = "stu-view.jsp?stuNo=" + stuNo;
+
+	function fnDept(v){
+		let form = document.form;
+		form.submit();
 	}
 
 </script>

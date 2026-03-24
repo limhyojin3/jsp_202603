@@ -33,6 +33,10 @@
 <%@ include file="../../db.jsp" %>
 <form action="" name="form">
 	<%
+		String sessionId = (String) session.getAttribute("sessionId"); //user01, admin(+)
+		String sessionRole = (String) session.getAttribute("sessionRole"); //A, C(+)
+		
+		
 		String boardNo = request.getParameter("boardNo");
 	%>
 	<input name="boardNo" value="<%= boardNo %>" hidden>
@@ -43,13 +47,25 @@
 	<table>
 	<%
 		
+		
+	
+	
+	
 		String sql ="UPDATE TBL_BOARD SET CNT = CNT + 1 "
 					+ "WHERE BOARDNO = " + boardNo;
 		stmt.executeUpdate(sql);
 		
+		
 		sql = "SELECT * FROM TBL_BOARD WHERE BOARDNO = " + boardNo;
 		ResultSet rs = stmt.executeQuery(sql);
+		
+		String userId = "";
+		
 		if(rs.next()){
+			
+			
+			userId = rs.getString("USERID");
+			
 	%>
 		<tr>
 			<th>제목</th>
@@ -70,6 +86,8 @@
 			<td colspan="3" class="contents"><%= rs.getString("CONTENTS") %></td>
 		</tr>
 	<%	
+		
+		
 		} else {
 			out.println("게시글이 존재하지 않습니다.");
 		}
@@ -77,8 +95,21 @@
 	%>
 	</table>
 	<div class="btn-area">
+	<%
+		if(userId.equals(sessionId) || sessionRole.equals("A")){
+			
+	%>
+	
+		
 		<input type="button" value="수정" onclick="fnEdit()">
 		<input type="button" value="삭제" onclick="fnRemove()">
+	
+	
+	<%		
+			
+		}
+	%>
+	
 		<input type="button" value="되돌아가기">
 	</div>
 </form>

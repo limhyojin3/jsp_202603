@@ -33,7 +33,9 @@
 		String boardNo = request.getParameter("boardNo");
 		String sql = "SELECT * FROM TBL_BOARD WHERE BOARDNO = " + boardNo;
 		ResultSet rs = stmt.executeQuery(sql);
+		
 		if(rs.next()){
+			
 		String kind = rs.getString("KIND");
 	%>
 		<form action="board-edit-result.jsp" name="form">

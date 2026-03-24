@@ -7,25 +7,27 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<!-- stu-add-result.jsp -->
+	
 	<%@ include file="../../db.jsp" %>
+	
 	<%
 		String stuNo = request.getParameter("stuNo");
 		String stuName = request.getParameter("stuName");
 		String stuDept = request.getParameter("stuDept");
 		String stuGrade = request.getParameter("stuGrade");
-		
+											//파라미터변수
 		String sql = "INSERT INTO STUDENT(STU_NO, STU_NAME, STU_DEPT, STU_GRADE) "
-					+ "VALUES("
-					+ "'" + stuNo + "',"
-					+ "'" + stuName + "',"
-					+ "'" + stuDept + "',"
-					+ "'" + stuGrade + "')";
+				+ "VALUES('" + stuNo + "', '" + stuName + "', '" + stuDept + "', " + stuGrade + ")";
+		//System.out.println(sql); 
+		
 		int result = stmt.executeUpdate(sql);
+		
 		if(result > 0){
-			/* out.println("추가되었습니다.!"); */
-			response.sendRedirect("stu-list.jsp");
-		} else {
-			out.println("에러 발생!");
+			response.sendRedirect("stu-list.jsp");	
+		
+		} else{
+			out.println("오류 발생 !");
 		}
 		
 	%>
