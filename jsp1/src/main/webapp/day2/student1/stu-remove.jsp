@@ -8,25 +8,19 @@
 </head>
 <body>
 	<%@ include file="../../db.jsp" %>
-	
 	<%
 		String stuNo = request.getParameter("stuNo");
-	
-		
-		String sql = "DELETE FROM STUDENT WHERE STU_NO = '" + stuNo + "'";
-		System.out.println(sql);
-		
+		String sql = "DELETE FROM STUDENT WHERE STU_NO = " + stuNo;
 		
 		int result = stmt.executeUpdate(sql);
-		
 		if(result > 0){
-			out.println("삭제되었습니다!");
-		} else{
-			out.println("실패했습니다!");
-		}
-	
-	
+			out.println("삭제 됨!");
 	%>
-	<a href="stu-list.jsp"><button>되돌아가기</button></a>
+			<a href="stu-list.jsp"><button>리스트로</button></a>
+	<%		
+		} else {
+			out.println("삭제 실패!");
+		}
+	%>
 </body>
 </html>

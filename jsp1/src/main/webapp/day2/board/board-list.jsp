@@ -46,8 +46,12 @@
 		String sql = "SELECT B.*, TO_CHAR(CDATETIME, 'YYYY-MM-DD') AS CDATE "
 					+ "FROM TBL_BOARD B WHERE 1=1 ";
 		if(keyword != null){
-			sql += "AND TITLE LIKE '%" + keyword + "%'";
+			sql += "AND TITLE LIKE '%" + keyword + "%' ";
 		}
+		if(true){
+			sql += "ORDER BY BOARDNO ASC ";	
+		}
+		
 		
 		ResultSet rs = stmt.executeQuery(sql);
 		while(rs.next()){
@@ -78,5 +82,6 @@
 	
 	function fnView(boardNo){
 		location.href = "board-view.jsp?boardNo=" + boardNo;
+		//파라미터 바로 옆에 따옴표 붙이지않는다! **
 	}
 </script>

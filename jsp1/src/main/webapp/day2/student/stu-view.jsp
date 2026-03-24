@@ -32,6 +32,10 @@
 		String stuNo = request.getParameter("stuNo");
 	%>
 	<input name="stuNo" value="<%= stuNo %>" hidden>
+	<!-- 이거 잠시 막아두면 어떤일이? ( ) 
+	    => 괜찮다! 파라미터 보내는 방법이 2개임.
+	    => 1. name hidden 인걸로 보내거나 
+	       2. 주소?파라미터=() 형태로 보내거나 !-->
 	
 	<table>
 	<% 
@@ -88,7 +92,9 @@
 		form.submit();
 	}
 	function fnRemove(){
-		location.href = "stu-remove.jsp?stuNo='" + <%= stuNo %> + "'"; 
+		location.href = "stu-remove.jsp?stuNo=" + <%= stuNo %>; 
+		// ?(물음표)뒤에가 파라미터로 쓰일까? ( ) => 그렇다고함! 파라미터 바로 옆에 따옴표붙이지않는다!
+		//작은 따옴표가 앞페이지든 뒤페이지든 중복으로 들어가지않게 조심 !! **
 	}
 
 </script>
