@@ -5,12 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	input[readOnly]{
+		background-color : #eee;
+		border-color : white;
+	}
+
+</style>
 </head>
 <body>
 
 	<form action="sign-up-result.jsp" name="signup">
 		<div>
 			<label>아이디 : <input name="userId"></label>
+			<input type="button" value="중복체크" onclick="fnCheck()"> 
 		</div>
 		<div>
 			<label>비밀번호 : <input name="pwd1" type="password"></label>
@@ -38,10 +46,44 @@
 </body>
 </html>
 <script>
+	
+	let addFlg = "N"
+	
+	function fnCheck(){
+		
+		/* user-check.jsp */
+		let form = document.signup;
+		let userId = form.userId.value; //'test1'
+		
+		if(userId == ""){
+			alert("아이디를 입력해주세요.");
+			return;
+		}
+		
+		window.open("user-check.jsp?userId=" + userId, "check", "width=400, height=400");
+		
+	}
+	
+	function fnReturn(flg){
+		let form = document.signup;
+		
+		if(flg == 'Y'){
+			form.userId.readOnly = true;
+			addFlg = flg; //'Y'
+		}
+		
+	}
+
+
 	function fnSignUp(){
 		let obj = document.signup;
 		
 		//obj.userId.value =>입력받은값
+		
+		if(addFlg == "N"){
+			alert("중복체크를 해주세요.");
+			return;
+		}
 		
 		if(obj.userId.value.length == 0){
 			alert("아이디를 입력하세요");
