@@ -51,23 +51,25 @@
 </head>
 <body>
 <div id="container">
-	<form action="" name="form">
+	<form action="student-list-paging.jsp" name="form">
 		<%@ include file="../../db.jsp" %>
 		
 		<%
 			int pageSize = 5;
 		
-			//~~~~~~~~~~~~~~~pageSize( )
-		
+			
+			if(request.getParameter("pageSize") != null){
+				pageSize = Integer.parseInt(request.getParameter("pageSize"));
+			}
 		%>
 		
 		<div class="select-area">
-			<select name="pageSize">
+			<select name="pageSize" onchange="fnPageSize()">
 				<%
 					int arr[] = {3, 5, 10, 15, 20};
 					for(int i=0; i<arr.length; i++){
 				%>
-						<option value="<%= arr[i] %>"> <%= arr[i] %> 개씩 </option>
+						<option value="<%= arr[i] %>" <%= pageSize == arr[i] ? "selected" : "" %>> <%= arr[i] %> 개씩 </option>
 				<%		
 					}
 				%>
@@ -100,8 +102,13 @@
 			
 			int currentPage = 1;
 		
+			if(request.getParameter("page") != null){
+				currentPage = Integer.parseInt(request.getParameter("page"));
+			}
 			
-		
+			
+			int offset = (currentPage - 1) * pageSize;
+			
 			String sql = "SELECT * "
 						+ "FROM STUDENT S WHERE 1=1 ";
 		
@@ -111,7 +118,7 @@
 			}
 			
 			if(true){
-				sql += "OFFSET " + 0 + " ROWS FETCH NEXT " +  pageSize  + " ROWS ONLY";
+				sql += "OFFSET " + offset + " ROWS FETCH NEXT " +  pageSize  + " ROWS ONLY";
 			}
 			
 			
@@ -136,20 +143,23 @@
 		
 		<div class="paging-area">
 		
+			<% if (currentPage != 1) { %>
+			<a href="?page=<%= currentPage-1 %>&pageSize=<%= pageSize %>">◀</a>
+			<% } %>
 			<%
 				for(int i=1; i <= pageList; i++){ 
 					
 			%>
-				<a href="?pageSize=<%= pageSize %>" class="<%= currentPage == i ? "active" : "" %>"> <%= i %> </a>
+				<a href="?page=<%= i %>&pageSize=<%= pageSize %>" class="<%= currentPage == i ? "active" : "" %>"> <%= i %> </a>
 				
 			<%		
 				}
 			
 			%>
 		
-		
-		
-		
+			<% if (currentPage != pageList) { %>
+			<a href="?page=<%= currentPage+1 %>&pageSize=<%= pageSize %>">▶</a>
+			<% } %>
 		
 		
 		</div>
@@ -158,4 +168,7 @@
 </body>
 </html>
 <script>
+	function fnPageSize(){
+		document.form.submit();
+	}
 </script>
